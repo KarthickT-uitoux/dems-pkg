@@ -186,6 +186,7 @@ app.component('eyatraCityForm', {
             self.city = response.data.city;
             self.state_list = response.data.state_list;
             self.status = response.data.status;
+            self.guest_house_status = response.data.guest_house_status;
             self.extras = response.data.extras;
             self.action = response.data.action;
 

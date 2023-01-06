@@ -147,6 +147,7 @@ class CityController extends Controller {
 			$this->data['action'] = 'Add';
 			$city = new NCity;
 			$this->data['status'] = 'Active';
+			$this->data['guest_house_status'] = 'Inactive';
 
 			$this->data['success'] = true;
 		} else {
@@ -163,6 +164,7 @@ class CityController extends Controller {
 			} else {
 				$this->data['status'] = 'Inactive';
 			}
+			$this->data['guest_house_status'] = $city->guest_house_status == 1 ? 'Active' : 'Inactive';
 		}
 		// $option = new NState;
 		// $option->name = 'Select State';
@@ -247,6 +249,7 @@ class CityController extends Controller {
 				$city->deleted_by = Auth::user()->id;
 
 			}
+			$city->guest_house_status = (isset($request->guest_house_status) && $request->guest_house_status == 'Active') ? 1 : 0;
 			$city->category_id = $request->category_id;
 
 			$city->save();

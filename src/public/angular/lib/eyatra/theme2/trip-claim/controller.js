@@ -1626,6 +1626,28 @@ app.component('eyatraTripClaimForm', {
                     }
                 }
             }
+            // Guest house approved document validate
+            if (self.trip.lodgings.length > 0 && jQuery.inArray(3756, tripAttachmentTypeIds) == -1) {
+                $(self.trip.lodgings).each(function(key, lodge) {
+                    console.log(lodge.stay_type_id);
+                    if (lodge.stay_type_id != 3342) {   // 3342 -> Office Guest house
+                        if (lodge.city_id) {
+                            var guestHouseStatus = 0
+                            $(self.extras.city_list).each(function(cityKey, city) {
+                                if (city.id == lodge.city_id) {
+                                    guestHouseStatus = city.guest_house_status
+                                }
+                            });
+                            if (guestHouseStatus == 1) {
+                                is_deviation = true;
+                                attachmentError = 'Guest House Approval document not uploaded'
+                                self.deviationTypeName += (self.deviationTypeName ? ', ' : '') + attachmentError;
+                            }
+                        }
+                    }
+                });
+            }
+            // Guest house approved document validate
 
             if (is_deviation) {
                 self.is_deviation = 1;
